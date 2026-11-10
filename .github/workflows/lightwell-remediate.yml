@@ -1,36 +1,25 @@
 name: Lightwell Remediate
 
 # Runs in the plugin repo and opens PRs on target payment app repos
-# (https://github.com/anurag-saran/lightwell-github-plugin-demo).
+# (https://github.com/darbyredhat/lightwell-github-plugin-demo, forked from anurag-saran).
 # Badge updates go to the bot-owned lightwell/badge branch (never main).
 # Remediation commits use --force-with-lease on lightwell/remediations.
 on:
   workflow_dispatch:
     inputs:
       target_repo:
-        description: App repo to remediate (owner/name). Schedule/push covers all four.
+        description: App repo to remediate (owner/name).
         required: true
-        default: anurag-saran/payments-service
+        default: darbyredhat/payments-service
         type: choice
         options:
-          - anurag-saran/payments-service
-          - anurag-saran/payments-service-notests
-          - anurag-saran/payments-service-grade-c
-          - anurag-saran/payments-service-grade-f
+          - darbyredhat/payments-service
       dry_run:
         description: Scan and summarize only (no push/PR)
         required: false
         default: false
         type: boolean
-  schedule:
-    - cron: "0 9 * * 1"
-  push:
-    paths:
-      - "lightwell-github/catalog.json"
-      - "lightwell-github/scan_poms.py"
-      - "lightwell-github/osv_cves.py"
-      - "lightwell-github/write_badge.py"
-      - ".github/workflows/lightwell-remediate.yml"
+  # schedule and push triggers removed for the demo fork: runs only when started manually.
 
 permissions:
   contents: read
@@ -48,7 +37,7 @@ jobs:
           SELECTED: ${{ inputs.target_repo }}
         run: |
           set -euo pipefail
-          ALL='["anurag-saran/payments-service","anurag-saran/payments-service-notests","anurag-saran/payments-service-grade-c","anurag-saran/payments-service-grade-f"]'
+          ALL='["darbyredhat/payments-service"]'
           if [ "$EVENT_NAME" = "workflow_dispatch" ] && [ -n "${SELECTED:-}" ]; then
             # JSON-encode the single selected repo
             echo "targets=$(python3 -c 'import json,os; print(json.dumps([os.environ["SELECTED"]]))')" >> "$GITHUB_OUTPUT"
@@ -196,7 +185,7 @@ jobs:
             echo
             echo "Lightwell found **${{ steps.scan.outputs.match_count }}** matching library update(s) and opened this PR automatically."
             echo
-            echo "Opened by plugin: https://github.com/anurag-saran/lightwell-github-plugin-demo"
+            echo "Opened by plugin: https://github.com/darbyredhat/lightwell-github-plugin-demo"
             echo
             echo "Branch \`lightwell/remediations\` is owned by the Lightwell bot (pushed with \`--force-with-lease\`)."
             echo
