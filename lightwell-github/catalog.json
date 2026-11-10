@@ -25,14 +25,6 @@
       "summary": "Lightwell remediated rebuild of json-path 2.8.0"
     },
     {
-      "groupId": "org.springframework",
-      "artifactId": "spring-core",
-      "fromVersion": "5.3.18",
-      "toVersion": "5.3.18.rhlw-00003",
-      "tier": "remediated",
-      "summary": "Lightwell remediated rebuild of spring-core 5.3.18"
-    },
-    {
       "groupId": "org.json",
       "artifactId": "json",
       "fromVersion": "20220320.0.0",
@@ -71,14 +63,6 @@
       "toVersion": "2.11.0.rhlw-00001",
       "tier": "validated",
       "summary": "Lightwell validated rebuild of commons-io 2.11.0"
-    },
-    {
-      "groupId": "org.apache.httpcomponents",
-      "artifactId": "httpclient",
-      "fromVersion": "4.5.12",
-      "toVersion": "4.5.12.rhlw-00001",
-      "tier": "validated",
-      "summary": "Lightwell validated rebuild of httpclient 4.5.12"
     },
     {
       "groupId": "org.yaml",
